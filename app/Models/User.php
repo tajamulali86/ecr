@@ -51,4 +51,11 @@ class User extends Authenticatable
     public function employees(){
         return $this->hasMany(Employee::class);
     }
+    public function calls(){
+        return $this->hasMany(Call::class);
+    }
+    public function region()
+{
+    return $this->belongsTo(Region::class);
+}
 }

@@ -25,6 +25,14 @@ class Call extends Model
     public function User(){
         return $this->belongsTo(    User::class);
     }
+    public function employee()
+{
+    return $this->belongsTo(User::class, 'employee_id');
+}
+    public function jointwith()
+{
+    return $this->belongsTo(User::class, 'joint_id');
+}
     public function Customer(){
         return $this->belongsTo(    Customer::class);
     }

@@ -29,7 +29,7 @@ class Customer extends Model
     public function Calls(){
         return $this->hasMany(Call::class);
     }
-    // public function employeeUserId(){
-    //     return $this->belongsTo(User::class);
-    // }
+    public function region (){
+        return $this->belongsTo(Region::class);
+    }
 }
