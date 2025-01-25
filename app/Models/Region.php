@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Region extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', ];
+    protected $fillable = ['name' ];
     public $timestamps = false; // Disable timestamps
 // public function employees()
 // {

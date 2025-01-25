@@ -22,11 +22,27 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $user = auth()->user();
+        $regionID= $user->region_id;
+        if($user->role!=="superadmin"){
+            return parent::getEloquentQuery()->where('region_id',  $regionID);
+        }
+        else{
+            return parent::getEloquentQuery();
+        }
+        }
+        // return parent::getEloquentQuery()->where('scholarship_id',  $latestScholarshipId)->whereHas('region', function ($query) use ($regionID) {
+        //     $query->where('region_id', $regionID);
+        // });
+
     public static function form(Form $form): Form
     {
         // dd(!auth()->user()->role == 'employee');
+        // dd(auth()->user());
         return $form
-            ->schema([
+        ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -35,16 +51,10 @@ class CustomerResource extends Resource
                 Forms\Components\Toggle::make('is_approved')
                 // ->hidden(! auth()->user()->role=='superadmin'),
                , Forms\Components\Hidden::make('region_id')
-            //    ->numeric()
-                ->default(auth()->user()->employees->first()->region_id) // Set the current user's ID by default
-                // ->hidden()
-                // ->disabled(!auth()->user()->role=='employee') ,
-                ,
+                                ->default(auth()->user()->region_id) // Set the current user's ID by default
+            ,
                 Forms\Components\Hidden::make('user_id')
-                //    ->numeric()
                 ->default(auth()->id()) // Set the current user's ID by default
-                // ->hidden()
-                // ->disabled(!auth()->user()->role=='employee') ,
                 ,Forms\Components\DatePicker::make('last_visited'),
 
             ]);
@@ -53,28 +63,16 @@ class CustomerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-
         // ->query(function (Builder $query) {
-        //     $user = auth()->user(); // Get the authenticated user
 
-        //     // Restrict customers based on the user's role and region
-        //     if ($user->role === 'manager') {
-        //         // Access the first manager's region_id
-        //         if ($user->managers->isNotEmpty()) {
-        //             $query->where('region_id', $user->managers->first()->region_id);
-        //         }
-        //     }
-
-        //     if ($user->role === 'employee') {
-        //         // Access the first employee's region_id
-        //         if ($user->employees->isNotEmpty()) {
-        //             $query->where('region_id', $user->employees->first()->region_id);
-        //         }
-        //     }
+        //     return $query;
         // })
+
+
+
             ->columns([
-                //
                 Tables\Columns\TextColumn::make('name')
+                //
                 // ->numeric()
                 ->searchable(),
             Tables\Columns\TextColumn::make('region.name')

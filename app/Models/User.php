@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'is_active',
         'role',
+        'region_id'
 
     ];
 
@@ -45,12 +46,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function managers(){
-        return $this->hasMany(Manager::class);
-    }
-    public function employees(){
-        return $this->hasMany(Employee::class);
-    }
+
     public function calls(){
         return $this->hasMany(Call::class);
     }

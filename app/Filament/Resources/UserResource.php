@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Region;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -19,6 +20,20 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $user = auth()->user();
+        $regionID= $user->region_id;
+        if($user->role==="manager"){
+            return parent::getEloquentQuery()->where('region_id',  $regionID)->andWhere('role','employee');
+        }
+        elseif($user->role==='employee'){
+            return parent::getEloquentQuery()->where('id',$user->id);
+        }
+        else{
+            return parent::getEloquentQuery();
+        }
+        }
     public static function form(Form $form): Form
     {
         return $form
@@ -30,6 +45,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')->required()->email(),
                 Forms\Components\TextInput::make('password')->required()->password(),
                 Forms\Components\Select::make('role')->options(['manager'=>'Manager','employee'=>'Employee'])->required(),
+                Forms\Components\Select::make('region')->options(Region::all()->pluck('name','id'))->required(),
                 Forms\Components\Toggle::make('is_active'),
 
             ]);

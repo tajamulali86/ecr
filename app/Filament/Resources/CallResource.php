@@ -36,6 +36,10 @@ class CallResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('customer_id')->label('Customer')
                 ->options(function () {
+                    $user=auth()->user();
+                    if($user->role!=='superadmin'){
+                        return \App\Models\Customer::where('region_id',$user->region_id)->pluck('name', 'id');
+                    }
                     return \App\Models\Customer::all()->pluck('name', 'id');
                 })
                     ->required()
@@ -56,7 +60,8 @@ class CallResource extends Resource
                     Forms\Components\Select::make('products')
                     ->multiple()
                     ->relationship('products','name')
-                    ->options(Product::all()->pluck('name', 'id'))
+                    ->options(Product
+                    ::all()->pluck('name', 'id'))
                     // ->searchable(),
                 ]);
     }

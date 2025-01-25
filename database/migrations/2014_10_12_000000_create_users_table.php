@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('is_active')->default(false);
             $table->enum('role',['superadmin','manager','employee']);
-            // $table->foreignId('region_id')->nullable();
+            $table->foreignId('region_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
