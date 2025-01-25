@@ -25,7 +25,7 @@ class UserResource extends Resource
         $user = auth()->user();
         $regionID= $user->region_id;
         if($user->role==="manager"){
-            return parent::getEloquentQuery()->where('region_id',  $regionID)->andWhere('role','employee');
+            return parent::getEloquentQuery()->where('region_id',  $regionID)->where('role',operator: 'employee')->orWhere('id',$user->id);
         }
         elseif($user->role==='employee'){
             return parent::getEloquentQuery()->where('id',$user->id);

@@ -38,9 +38,9 @@ class CallResource extends Resource
                 ->options(function () {
                     $user=auth()->user();
                     if($user->role!=='superadmin'){
-                        return \App\Models\Customer::where('region_id',$user->region_id)->pluck('name', 'id');
+                        return \App\Models\Customer::where('is_approved',true)->where('region_id',$user->region_id)->pluck('name', 'id');
                     }
-                    return \App\Models\Customer::all()->pluck('name', 'id');
+                    return \App\Models\Customer::where('is_approved',true)->pluck('name', 'id');
                 })
                     ->required()
                     ,
