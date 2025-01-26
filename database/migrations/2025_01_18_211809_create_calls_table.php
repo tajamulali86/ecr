@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('calls', function (Blueprint $table) {
             $table->id();
-            $table->time('time');
-            $table->date('date'); //Date
+            $table->time('time')->nullable();
+            $table->date('date')->nullable(); //Date
             $table->foreignId('customer_id');// doctor
             $table->boolean('is_joint')->default(false);
             $table->foreignId('employee_id')->constrained('users'); // emp referencing users
