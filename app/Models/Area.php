@@ -13,4 +13,8 @@ class Area extends Model
     public function region(){
         return $this->belongsTo(Region::class); // Assuming Region model has a 'area_id' column
     }
+
+    public function customers(){
+        return $this->hasMany(Customer::class); // Assuming Customer model has an 'area_id' column
+    }
 }

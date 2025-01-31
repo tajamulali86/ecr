@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Models\Area;
 use App\Models\Customer;
 use App\Models\Region;
 use App\Models\Speciality;
@@ -50,12 +51,11 @@ class CustomerResource extends Resource
                 Forms\Components\Select::make('specialty_id')->label('Speciality')->options(Speciality::all()->pluck('name','id'))->visible(fn (Forms\Get $get) => $get('type') === 'doctor')->nullable(),
                 Forms\Components\Toggle::make('is_approved')
                 // ->hidden(! auth()->user()->role=='superadmin'),
-               , Forms\Components\Hidden::make('region_id')
-                                ->default(auth()->user()->region_id) // Set the current user's ID by default
+               , Forms\Components\Select::make('area_id')->label('Area')->options(Area::where('region_id',auth()->user()->region_id)->pluck('name','id'))
+                                // Set the current user's ID by default
             ,
                 Forms\Components\Hidden::make('user_id')
                 ->default(auth()->id()) // Set the current user's ID by default
-                ,Forms\Components\DatePicker::make('last_visited'),
 
             ]);
     }
@@ -75,7 +75,7 @@ class CustomerResource extends Resource
                 //
                 // ->numeric()
                 ->searchable(),
-            Tables\Columns\TextColumn::make('region.name')
+            Tables\Columns\TextColumn::make('area.name')
                 ->sortable(),
             Tables\Columns\TextColumn::make('type'),
             Tables\Columns\BooleanColumn::make('is_approved')->label('Approval status')

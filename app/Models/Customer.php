@@ -32,4 +32,7 @@ class Customer extends Model
     public function region (){
         return $this->belongsTo(Region::class);
     }
+    public function area (){
+        return $this->belongsTo(Area::class);
+    }
 }
