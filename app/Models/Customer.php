@@ -17,8 +17,8 @@ class Customer extends Model
         'is_approved',
         'speciality_id',
         'contact',
-        'region_id',
-        'last_visited'
+        'area_id',
+
 
     ];
 

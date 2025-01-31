@@ -9,7 +9,7 @@ class Region extends Model
 {
     use HasFactory;
     protected $fillable = ['name' ];
-    public $timestamps = false; // Disable timestamps
+    // public $timestamps = false; // Disable timestamps
 // public function employees()
 // {
 //     return $this->hasMany(Employee::class); // Assuming Employee model has a 'region_id' column
@@ -22,6 +22,10 @@ public function customers()
 public function users()
 {
     return $this->hasMany(User::class);
+}
+public function areas()
+{
+    return $this->hasMany(Area::class);
 }
 
 }

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             RegionSeeder::class,
+            AreaSeeder::class,
             UserSeeder::class,
             ProductSeeder::class,
             SpecialitySeeder::class,

@@ -16,7 +16,7 @@ class CustomerSeeder extends Seeder
     {
 
         for($i=1;$i<20;$i++){
-            Customer::create(['name' => fake()->name(),'user_id'=>random_int(2,7),'type'=>rand(1,3),'region_id'=>rand(1,4)]);
+            Customer::create(['name' => fake()->name(),'user_id'=>random_int(2,7),'type'=>rand(1,3),'area_id'=>rand(1,20)]);
         }
     }
 }

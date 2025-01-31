@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('user_id')->nullable();// employee who added customer
+            $table->foreignId('user_id');// employee who added customer
             $table->enum('type',['doctor', 'distributor','chemist']);
             $table->boolean('is_approved')->default(false);
             $table->foreignId('specialty_id')->nullable();
             $table->json('contact')->nullable();
-            $table->foreignId('region_id')->nullable();
-            $table->date('last_visited')->nullable();
+            $table->foreignId('area_id')->nullable();
             $table->timestamps();
         });
     }

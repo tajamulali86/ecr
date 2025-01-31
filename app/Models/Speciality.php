@@ -10,6 +10,6 @@ class Speciality extends Model
     use HasFactory;
     protected $fillable = [
         'name'];
-        public $timestamps = false; // Disable timestamps
+        // public $timestamps = false; // Disable timestamps
 
 }

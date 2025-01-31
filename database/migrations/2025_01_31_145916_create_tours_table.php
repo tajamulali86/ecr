@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regions', function (Blueprint $table) {
+        Schema::create('tours', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('user_id');
+            $table->date('month');//1st day of each month.
+            $table->boolean('is_approved')->default(false);
+            $table->foreignId('approver_id')->constrained('users')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
-
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('regions');
+        Schema::dropIfExists('tours');
     }
 };
